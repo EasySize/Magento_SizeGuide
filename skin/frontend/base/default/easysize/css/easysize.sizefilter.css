@@ -1,0 +1,16 @@
+.easysize-sizefilter {
+    width: 100%;
+}
+
+.easysize-sizefilter input {
+    width: 100%;
+    border: 1px solid #6cac46;
+    background: white;
+    outline: none;
+    padding: 10px 15px;
+}
+
+.easysize-sizefilter .easysize-sizefilter-turn-off {
+    border: 1px solid #be2c00;
+    background: white;
+}

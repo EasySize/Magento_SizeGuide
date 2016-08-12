@@ -1,0 +1,40 @@
+<!--<?xml version="1.0"?>-->
+<!--<config>-->
+    <!--<modules>-->
+        <!--<EasySize_SizeFilter>-->
+            <!--<version>0.0.1</version>-->
+        <!--</EasySize_SizeFilter>-->
+    <!--</modules>-->
+
+    <!--<frontend>-->
+        <!--<routers>-->
+            <!--<sizefilter>-->
+                <!--<use>standard</use>-->
+                <!--<args>-->
+                    <!--<module>EasySize_SizeFilter</module>-->
+                    <!--<frontName>sizefilter</frontName>-->
+                <!--</args>-->
+            <!--</sizefilter>-->
+        <!--</routers>-->
+
+        <!--<layout>-->
+            <!--<updates>-->
+                <!--<sizefilter>-->
+                    <!--<file>sizefilter.xml</file>-->
+                <!--</sizefilter>-->
+            <!--</updates>-->
+        <!--</layout>-->
+
+        <!--<events>-->
+            <!--&lt;!&ndash;catalog_block_product_list_collection&ndash;&gt;-->
+            <!--<catalog_product_collection_apply_limitations_after>-->
+                <!--<observers>-->
+                    <!--<easysize_sizefilter_product_filter>-->
+                        <!--<class>EasySize_SizeFilter_Model_Observer</class>-->
+                        <!--<method>filterProducts</method>-->
+                    <!--</easysize_sizefilter_product_filter>-->
+                <!--</observers>-->
+            <!--</catalog_product_collection_apply_limitations_after>-->
+        <!--</events>-->
+    <!--</frontend>-->
+<!--</config>-->

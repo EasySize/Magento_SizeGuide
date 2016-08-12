@@ -1,0 +1,19 @@
+{
+    "name": "EasySize/SizeGuide",
+    "license": "OSL v3.0",
+    "description": "EasySize magento extenstion",
+    "keywords": ["easysize", "size", "size guide", "reduce returns"],
+    "homepage": "https://github.com/EasySize/Magento_SizeGuide",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "JEasySize",
+            "email": "gk@easysize.me",
+            "homepage": "https://www.easysize.me",
+            "role": "CEO"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    }
+}

@@ -1,0 +1,164 @@
+<config>
+    <tabs>
+        <easysize module="sizeguide">
+            <label>EasySize</label>
+            <sort_order>99999</sort_order>
+        </easysize>
+    </tabs> 
+    <sections>
+        <sizeguide module="sizeguide">
+            <label>Settings</label>
+            <tab>easysize</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1000</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <sizeguide>
+                    <label>Required fields</label>
+                    <comment>Please consult your developers or EasySize team if you are not sure about the right value to be selected.</comment>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <sizeguide_size_config_header>
+                            <label>EasySize configuration</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizeguide_size_config_header>
+
+                        <sizeguide_shopid>
+                            <label>Shop ID</label>
+                            <comment><![CDATA[<h4>Provided by EasySize</h4>]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizeguide_shopid>
+
+                        <sizeguide_gender_attribute>
+                            <label>Gender attribute code</label>
+                            <comment>Select the attribute that contains gender information</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>sizeguide/shopAttributes</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizeguide_gender_attribute>
+
+                        <sizeguide_gender_one_attribute>
+                            <label>Gender</label>
+                            <comment><![CDATA[<strong style="color:red">Note!</strong> Only fill this in, if you are selling one gender items <em>(E.g Male or Female)</em>. <strong>Leave blank otherwise!</strong>]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizeguide_gender_one_attribute>
+
+                        <sizeguide_brand_attribute>
+                            <label>Brand attribute code</label>
+                            <comment><![CDATA[
+                                <strong style="color:red">Note!</strong>
+                                <hr/>
+                                <p>If your product brand is stored as an attribute, select that attribute!</p>
+                                <hr/>
+                                <p>If your product brand is stored as category, select the parent category, under which all the brands are stored</p>
+                                <hr/>
+                                <em>Contact EasySize if you are unsure about the selection</em>
+                                ]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>sizeguide/shopAttributes</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizeguide_brand_attribute>
+
+                        <sizeguide_size_attributes>
+                            <label>Size attribute codes</label>
+                            <comment>Select all attributes that contain size information</comment>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>sizeguide/shopAttributes</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizeguide_size_attributes>
+
+                        <sizeguide_size_placemenet_header>
+                            <label>EasySize appearance on page</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizeguide_size_placemenet_header>
+
+                        <sizeguide_button_placeholder>
+                            <label>EasySize button placeholder</label>
+                            <comment><![CDATA[<em>NOTE! Some technical knowledge required!</em><p>Selector of the element where EasySize will be appended.</p>]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizeguide_button_placeholder>
+
+                        <sizeguide_add_to_cart_button>
+                            <label>Add to cart button</label>
+                            <comment><![CDATA[<em>NOTE! Some technical knowledge required!</em><p>Selector of your add to cart button. <em>(<strong>.btn-cart</strong> on default templates, might be different on 3rd party templates)</em>]]></comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizeguide_add_to_cart_button>
+                    </fields> 
+                </sizeguide>
+
+                <sizefilter>
+                    <label>Size Filter</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>2</show_in_default>
+                    <show_in_website>2</show_in_website>
+                    <show_in_store>2</show_in_store>
+                    <fields>
+                        <sizefilter_header>
+                            <label>Size filter feature config</label>
+                            <comment>This part requires some technical knowledge. Please contact EasySize if you need assistance settings this up.</comment>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sizefilter_header>
+
+                        <sizefilter_enabled>
+                            <label>Enabled</label>
+                            <comment>
+                                <![CDATA[Enable or Disable size filter feature.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>2</show_in_default>
+                            <show_in_website>2</show_in_website>
+                            <show_in_store>2</show_in_store>
+                        </sizefilter_enabled>
+                    </fields>
+                </sizefilter>
+            </groups>
+        </sizeguide>
+    </sections>     
+</config>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<layout>
+    <!-- frontName/controllername/actionmethod -->
+    <catalog_product_view>
+        <reference name="before_body_end">
+            <block 
+                type="sizeguide/data" 
+                name="sizeguide" 
+                template="sizeguide/easysize.phtml" />
+        </reference>
+    </catalog_product_view>
+
+    <catalog_category_view>
+        <block
+            type="sizeguide/data"
+            before="product_list"
+            name="sizefilter"
+            template="sizeguide/sizefilter.phtml"/>
+
+        <reference name="left">
+            <action method="append" ifconfig="sizeguide/sizefilter/sizefilter_enabled">
+                <block>sizefilter</block>
+            </action>
+        </reference>
+
+        <reference name="head">
+            <action method="addCss">
+                <stylesheet>easysize/css/easysize.sizefilter.css</stylesheet>
+            </action>
+        </reference>
+    </catalog_category_view>
+</layout>
