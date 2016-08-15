@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>easysize</name>
+    <version>1.3.5</version>
+    <stability>stable</stability>
+    <license uri="https://www.easysize.me/terms-of-use/">EasySize</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>EasySize sizing solution</summary>
+    <description>EasySize was founded in October 2014 by Gulnaz Khusainova and is currently based in Copenhagen, Denmark. EasySize&#x2019;s aim is to improve the online shopping experience for customers and empower retailers to grow their online businesses by using smart technology to accurately understand what a customer&#x2019;s ideal fit is. To date, EasySize has helped over 400,000 unique users find their ideal fit all over the world. Please visit easysize.me for more information.</description>
+    <notes>Crash fix when module is installed via composer or other package manager</notes>
+    <authors><author><name>EasySize IVS</name><user>EasySize</user><email>gk@easysize.me</email></author></authors>
+    <date>2016-08-12</date>
+    <time>12:54:41</time>
+    <contents><target name="magecommunity"><dir name="EasySize"><dir name="SizeGuide"><dir name="Block"><file name="Data.php" hash="f0db0b5c6ddb7942a7d8ad4df847fe2f"/></dir><dir name="Helper"><file name="Data.php" hash="e1f1c548146a5eedc58222620232a758"/></dir><dir name="Model"><file name="Observer.php" hash="d01554bad6594a5a1b62009e2374c0a4"/><dir name="Resource"><file name="Setup.php" hash="db68d16089806da3849ab919e4e35a01"/></dir><file name="ShopAttributes.php" hash="f53c64e27f9a3c7f2b2a11ea74afe01e"/></dir><dir name="etc"><file name="config.xml" hash="572af9083560762c31f192a18be3abff"/><file name="system.xml" hash="3b9d574c828581df0c306608eb0aeae1"/></dir><dir name="sql"><dir name="sizeguide_setup"><file name="install-1.3.5.php" hash="f105323c8b2ab85bcf002fa382b0ad00"/></dir></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="sizeguide"><file name="easysize.phtml" hash="6ac08d92b89649dd1384ac190eb1865c"/><file name="sizefilter.phtml" hash="1fa6522b7f6482c9bdf42c4360b9b801"/></dir></dir><dir name="layout"><file name="sizeguide.xml" hash="abb47cb6331cc1271de76dd485bc374f"/></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="EasySize_SizeGuide.xml" hash="2397289fc71f8ddb23dec37aefdf4779"/></dir></target><target name="mageskin"><dir name="frontend"><dir name="base"><dir name="default"><dir name="easysize"><dir name="css"><file name="easysize.sizefilter.css" hash="939a9901108e5daa86252cd98d8b9824"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.3.0</min><max>6.0.0</max></php></required></dependencies>
+</package>
