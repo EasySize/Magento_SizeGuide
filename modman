@@ -1,0 +1,4 @@
+app/code/community/EasySize/*  app/code/community/EasySize/
+app/design/frontend/base/default/layout/sizeguide.xml  app/design/frontend/base/default/layout/sizeguide.xml
+app/design/frontend/base/default/template/sizeguide/*  app/design/frontend/base/default/template/sizeguide/
+skin/frontend/base/default/easysize/* skin/frontend/base/default/easysize/
