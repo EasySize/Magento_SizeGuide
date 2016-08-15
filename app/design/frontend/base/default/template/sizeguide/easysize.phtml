@@ -1,6 +1,7 @@
 <?php
     $easysize_attributes = $this->getRequiredAttributes();
-    if(json_decode($easysize_attributes)->product_id): ?>
+    $easysize_attributes_decoded = json_decode($easysize_attributes);
+    if(isset($easysize_attributes_decoded) && isset($easysize_attributes_decoded->product_id)): ?>
         <script type="text/javascript" src="https://webapp.easysize.me/web_app_v1.0/js/easysize.js"></script>
         <script>
             var EasySize = new EasySize(<?php echo $easysize_attributes; ?>);
