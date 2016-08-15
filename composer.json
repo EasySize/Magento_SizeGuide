@@ -1,6 +1,7 @@
 {
     "name": "easysize/sizeguide",
     "license": "OSL v3.0",
+    "type": "magento-module",
     "description": "EasySize magento extension",
     "keywords": ["easysize", "size", "size guide", "reduce returns"],
     "homepage": "https://github.com/EasySize/Magento_SizeGuide",
