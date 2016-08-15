@@ -4,9 +4,8 @@
     if(isset($easysize_attributes_decoded) && isset($easysize_attributes_decoded->product_id)): ?>
         <script type="text/javascript" src="https://webapp.easysize.me/web_app_v1.0/js/easysize.js"></script>
         <script>
-            var EasySize = new EasySize(<?php echo $easysize_attributes; ?>);
-
             try {
+                var EasySize = new EasySize(<?php echo $easysize_attributes; ?>);
                 EasySize.start();
             } catch(e) {
                 console.log(e);
