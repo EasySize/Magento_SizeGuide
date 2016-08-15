@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <EasySize_SizeGuide>
+            <active>true</active>
+            <codePool>community</codePool>
+        </EasySize_SizeGuide>
+    </modules>
+</config>
