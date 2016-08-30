@@ -5,7 +5,7 @@
         <script type="text/javascript" src="https://webapp.easysize.me/web_app_v1.0/js/easysize.js"></script>
         <script>
             function initEasySize() {
-                var EasySize = new EasySize(<?php echo $easysize_attributes; ?>);
+                var EasySize = new window.EasySize(<?php echo $easysize_attributes; ?>);
                 EasySize.start();
             }
 
