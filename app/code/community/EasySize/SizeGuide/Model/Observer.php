@@ -10,7 +10,6 @@ class EasySize_SizeGuide_Model_Observer {
 
             // iterate through all items in the order
             foreach($order->getAllItems() as $order_item) {
-                // Unserialize item data
                 $item = unserialize($order_item->product_options);
 
                 // Check whether ordered item exists in cart
@@ -23,7 +22,15 @@ class EasySize_SizeGuide_Model_Observer {
                     
                     foreach ($item['attributes_info'] as $value) {
                         if (in_array($value['label'], $size_attributes)) {
-                            $curl = curl_init("https://popup.easysize.me/collect?a=24&v=".urlencode($value['value'])."&pv={$items_in_cart->$item['simple_sku']}");
+                            $params[] = "a=24";
+                            $params[] = "v=".urlencode($value['value']);
+                            $params[] = "v3=".urlencode($order->getIncrementId());
+                            if($order->getCustomerId()) {
+                                $params[] = "v4=".urlencode($order->getCustomerId());
+                            }
+                            $params[] = "pv={$items_in_cart->$item['simple_sku']}";
+                            $params = implode("&", $params);
+                            $curl = curl_init("https://popup.easysize.me/collect?${params}");
                             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                             curl_exec($curl);
                             curl_close($curl);
@@ -51,117 +58,55 @@ class EasySize_SizeGuide_Model_Observer {
         }
     }
 
-    public function updateCart($observer) {
-        // todo. Fix update cart
-    }
+    public function updateProductStock($observer) {
+        $sizes_in_stock = array();
+        $size_attribute_codes = Mage::getStoreConfig('sizeguide/sizeguide/sizeguide_size_attributes');
+        $shop_id = Mage::getStoreConfig('sizeguide/sizeguide/sizeguide_shopid');
 
-    public function filterProducts($observer)
-    {
-        if(isset($_REQUEST['easysize_sizefilter_products'])) {
-            $observer->getEvent()->getCollection()->addAttributeToFilter('entity_id', array('in' => $_REQUEST['easysize_sizefilter_products']));
-        }
+        $product = $observer->getData('product');
+        $product_id = $product->getId();
+        $product_attributes = Mage::getModel('eav/config')
+            ->getEntityAttributeCodes(Mage_Catalog_Model_Product::ENTITY,$product);
 
-        if (Mage::registry('easysize_sizefilter_applied') || Mage::getStoreConfig('sizeguide/sizefilter/sizefilter_enabled') != 1) { return; }
+        if($product->getTypeId() == 'configurable') {
+            $child_products = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
 
-        // Get product attribute names for data extraction
-        $shop_configuration = Mage::getStoreConfig('sizeguide/sizeguide');
-        $gender_attribute_name = $shop_configuration['sizeguide_gender_attribute'];
-        $easysize_shop_id = $shop_configuration['sizeguide_shopid'];
-
-        if(isset($_COOKIE['esui'])) {
-            $easysize_user_id = $_COOKIE['esui'];
-
-            if(!is_numeric($easysize_user_id) || is_numeric($easysize_user_id) && $easysize_user_id < 0) {
-                Mage::register('easysize_sizefilter_applied', true);
-                return;
-            }
-        } else {
-            Mage::register('easysize_sizefilter_applied', true);
-            return;
-        }
-
-        $collection = $observer->getEvent()->getCollection()
-            ->addAttributeToSelect('manufacturer');
-        $collection_product_ids = $collection->getAllIds();
-        $first_item = Mage::getModel('catalog/product')->getCollection()
-            ->addAttributeToSelect($gender_attribute_name)
-            ->addAttributeToFilter('entity_id', array('in' => $collection_product_ids))
-            ->addAttributeToFilter('type_id', 'configurable')
-            ->getFirstItem();
-
-        $current_store = Mage::app()->getRequest()->getParam('store');
-
-        //  Using first item from collection, get gender and category of items
-        if(strlen($shop_configuration['sizeguide_gender_one_attribute']) > 0) {
-            $product_gender = $shop_configuration['sizeguide_gender_one_attribute'];
-        } else {
-            $product_gender = $first_item->getAttributeText($gender_attribute_name);
-        }
-
-        $params = [];
-        $params[] = "shop_id={$easysize_shop_id}";
-        $params[] = "gender={$product_gender}";
-        $params[] = "easysize_user_id={$easysize_user_id}";
-
-        if($first_item->getCategory() && $product_type = $first_item->getCategory()->getName()) {
-            $product_type_decoded = urlencode($product_type);
-
-            if($this->isCategoryABrand($first_item->getCategory())) {
-                $params[] = "brand={$product_type_decoded}";
-            } else {
-                $params[] = "category={$product_type_decoded}";
-            }
-        } else {
-            /*
-            If product attribute extraction fails, register a notice to not have an overload
-            */
-            Mage::register('easysize_sizefilter_applied', true);
-            return;
-        }
-
-        $params = implode('&', $params);
-        $url = "https://popup.easysize.me/filterProductsBySize?${params}";
-        $curl = curl_init();
-        curl_setopt_array($curl, array( CURLOPT_RETURNTRANSFER => 1, CURLOPT_URL => $url ));
-        $data = json_decode(curl_exec($curl), true);
-        curl_close($curl);
-
-        $filtered_product_ids = [];
-        foreach ($data as $item) {
-            $filtered_product_ids[] = $item['product_id'];
-        }
-
-        if(sizeof($filtered_product_ids) > 0) {
-            $_REQUEST['easysize_sizefilter_has_products'] = true;
-
-            if(!isset($_POST['easysize_sizefilter'])) { $_POST['easysize_sizefilter'] = ''; }
-
-            if (
-                isset($_POST['easysize_sizefilter']) && $_POST['easysize_sizefilter'] == "enable"
-                || isset($_SESSION['easysize_sizefilter']) && $_SESSION['easysize_sizefilter'] == 1 && $_POST['easysize_sizefilter'] != "disable") {
-
-                $_SESSION['easysize_sizefilter'] = 1;
-                $_REQUEST['easysize_sizefilter_applied'] = true;
-                $_REQUEST['easysize_sizefilter_products'] = $filtered_product_ids;
-            } elseif(isset($_POST['easysize_sizefilter']) && $_POST['easysize_sizefilter'] === "disable") {
-                $_SESSION['easysize_sizefilter'] = 0;
-            }
-        }
-
-        Mage::register('easysize_sizefilter_applied', true);
-    }
-
-    private function isCategoryABrand($category) {
-        $brandFromCategory = Mage::getModel('catalog/category')->load(Mage::getStoreConfig('sizeguide/sizeguide/sizeguide_brand_attribute'));
-        if($brandFromCategory->getId()) {
-            $_parentCategories = $category->getParentCategories();
-            foreach($_parentCategories as $_parentCategory) {
-                if($brandFromCategory->getId() != $_parentCategory->getId() && in_array($brandFromCategory->getId(), $_parentCategory->getPathIds())) {
-                    return true;
+            // Iterate through all simple products
+            foreach ($child_products as $simple_product) {
+                // Iterate through all size attributes
+                foreach (explode(',', $size_attribute_codes) as $size_attribute) {
+                    if (in_array($size_attribute, $product_attributes)) {
+                        $current_simple_product_id = $simple_product->getId();
+                        $current_simple_product = Mage::getModel('catalog/product')->load($current_simple_product_id);
+                        $quantity = $current_simple_product->getStockItem()->getQty();
+                        $size = $current_simple_product->getAttributeText($size_attribute);
+                        $sizes_in_stock[$size] = $quantity;
+                    }
                 }
             }
-        } else {
-            return false;
+        } else if($product->getTypeId() == 'simple') {
+            foreach (explode(',', $size_attribute_codes) as $size_attribute) {
+                if (in_array($size_attribute, $product_attributes)) {
+                    $current_simple_product_id = $product->getId();
+                    $current_simple_product = Mage::getModel('catalog/product')->load($current_simple_product_id);
+                    $quantity = $current_simple_product->getStockItem()->getQty();
+                    $size = $current_simple_product->getAttributeText($size_attribute);
+                    $sizes_in_stock[$size] = $quantity;
+                }
+            }
+
+            $product_id = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId())[0];
+        }
+
+        if($product_id) {
+            $data = json_encode(array("sizes_in_stock" => $sizes_in_stock));
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://popup.easysize.me/api/{$shop_id}/product_stock/{$product_id}");
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json','Content-Length: '.strlen($data)));
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+            curl_setopt($ch, CURLOPT_POSTFIELDS,$data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $response  = curl_exec($ch);
         }
     }
 }

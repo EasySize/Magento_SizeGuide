@@ -37,7 +37,7 @@ class EasySize_SizeGuide_Block_Data extends Mage_Core_Block_Template {
         }
 
         $required_attributes->product_type = implode(',', $this->getProductCategoriesNames($product));
-        $required_attributes->sizes_in_stock = $this->getProductSizesInStock($product, $shop_configuration['sizeguide_size_attributes']);
+        $required_attributes->sizes_in_stock = $this->getProductSizesInStock($product);
         $required_attributes->shop_id = $shop_configuration['sizeguide_shopid'];
         $required_attributes->placeholder = $shop_configuration['sizeguide_button_placeholder'];
         $required_attributes->size_selector = "attribute{$this->size_attribute_id}";
@@ -83,10 +83,11 @@ class EasySize_SizeGuide_Block_Data extends Mage_Core_Block_Template {
      * Iterates through all the simple products created from the configurable product
      * Returns array of products' sizes in stock.
      */
-    private function getProductSizesInStock($product, $size_attribute_codes) {
+    private function getProductSizesInStock($product) {
         $sizes_in_stock = array();
 
         if($product->getTypeId() == 'configurable') {
+            $size_attribute_codes = Mage::getStoreConfig('sizeguide/sizeguide/sizeguide_size_attributes');
             $child_products = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
             $product_attributes = Mage::getModel('eav/config')
                             ->getEntityAttributeCodes(Mage_Catalog_Model_Product::ENTITY,$product);

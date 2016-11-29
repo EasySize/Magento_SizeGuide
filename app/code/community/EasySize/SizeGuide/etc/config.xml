@@ -2,7 +2,7 @@
 <config>
     <modules>
         <EasySize_SizeGuide>
-            <version>1.3.5</version>
+            <version>1.4.0</version>
         </EasySize_SizeGuide>
     </modules>
 
@@ -56,24 +56,6 @@
                     </easysize_sizeguide_add_to_cart>
                 </observers>
             </checkout_cart_product_add_after>
-            <checkout_cart_update_item_complete>
-                <observers>
-                    <easysize_sizeguide_update_cart>
-                        <type>singleton</type>
-                        <class>sizeguide/observer</class>
-                        <method>updateCart</method>
-                    </easysize_sizeguide_update_cart>
-                </observers>
-            </checkout_cart_update_item_complete>
-
-            <catalog_product_collection_apply_limitations_after>
-                <observers>
-                    <easysize_sizefilter_product_filter>
-                        <class>EasySize_SizeGuide_Model_Observer</class>
-                        <method>filterProducts</method>
-                    </easysize_sizefilter_product_filter>
-                </observers>
-            </catalog_product_collection_apply_limitations_after>
         </events>
     </frontend>
 
@@ -104,5 +86,17 @@
                 </setup>
             </sizeguide_setup>
         </resources>
+
+        <events>
+            <catalog_product_save_commit_after>
+                <observers>
+                    <easysize_sizeguide_update_product>
+                        <type>singletone</type>
+                        <class>sizeguide/observer</class>
+                        <method>updateProductStock</method>
+                    </easysize_sizeguide_update_product>
+                </observers>
+            </catalog_product_save_commit_after>
+        </events>
     </global>
 </config>
