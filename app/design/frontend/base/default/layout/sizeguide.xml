@@ -1,32 +1,22 @@
 <?xml version="1.0"?>
 <layout>
+    <default>
+        <reference name="head">
+            <block type="core/text" name="easysize_script">
+                <action method="setText">
+                    <text><![CDATA[<script src="https://webapp.easysize.me/web_app_v1.0/js/easysize.js"></script>]]></text>
+                </action>
+            </block>
+        </reference>
+    </default>
+
     <!-- frontName/controllername/actionmethod -->
     <catalog_product_view>
         <reference name="before_body_end">
-            <block 
-                type="sizeguide/data" 
-                name="sizeguide" 
+            <block
+                type="sizeguide/data"
+                name="sizeguide"
                 template="sizeguide/easysize.phtml" />
         </reference>
     </catalog_product_view>
-
-    <catalog_category_view>
-        <block
-            type="sizeguide/data"
-            before="product_list"
-            name="sizefilter"
-            template="sizeguide/sizefilter.phtml"/>
-
-        <reference name="left">
-            <action method="append" ifconfig="sizeguide/sizefilter/sizefilter_enabled">
-                <block>sizefilter</block>
-            </action>
-        </reference>
-
-        <reference name="head">
-            <action method="addCss">
-                <stylesheet>easysize/css/easysize.sizefilter.css</stylesheet>
-            </action>
-        </reference>
-    </catalog_category_view>
 </layout>

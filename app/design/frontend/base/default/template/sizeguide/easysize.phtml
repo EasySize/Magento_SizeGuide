@@ -2,10 +2,11 @@
     $easysize_attributes = $this->getRequiredAttributes();
     $easysize_attributes_decoded = json_decode($easysize_attributes);
     if(isset($easysize_attributes_decoded) && isset($easysize_attributes_decoded->product_id)): ?>
-        <script type="text/javascript" src="https://webapp.easysize.me/web_app_v1.0/js/easysize.js"></script>
         <script>
+            var es_attributes = <?php echo $easysize_attributes; ?>;
+
             function initEasySize() {
-                var EasySize = new window.EasySize(<?php echo $easysize_attributes; ?>);
+                var EasySize = new window.EasySize(es_attributes);
                 EasySize.start();
             }
 
