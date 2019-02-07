@@ -3,7 +3,7 @@
 class EasySize_SizeGuide_Model_Observer {
     public function sendTrackingData($observer) {
         if(Mage::getModel('core/cookie')->get('es_cart_items') != false) {
-            // Get all items in cart 
+            // Get all items in cart
             $order = Mage::getModel('sales/order')->load($observer->getData('order_ids')[0]);
             $items_in_cart = json_decode(Mage::getModel('core/cookie')->get('es_cart_items'));
             $this->orders = new stdClass();
@@ -19,18 +19,19 @@ class EasySize_SizeGuide_Model_Observer {
                         $sattr = Mage::getSingleton('eav/config')->getAttribute('catalog_product', $attribute);
                         $size_attributes[] = $sattr->getFrontendLabel();
                     }
-                    
+
                     foreach ($item['attributes_info'] as $value) {
                         if (in_array($value['label'], $size_attributes)) {
-                            $params[] = "a=24";
-                            $params[] = "v=".urlencode($value['value']);
-                            $params[] = "v3=".urlencode($order->getIncrementId());
-                            if($order->getCustomerId()) {
-                                $params[] = "v4=".urlencode($order->getCustomerId());
-                            }
-                            $params[] = "pv={$items_in_cart->$item['simple_sku']}";
-                            $params = implode("&", $params);
-                            $curl = curl_init("https://popup.easysize.me/collect?${params}");
+                            $data = http_build_query(
+                                "pageview_id" => $items_in_cart->$item['simple_sku'],
+                                "purchased_size" => $value['value'],
+                                "order_id" => $order->getIncrementId(),
+                                "product_id" => $item['simple_sku'],
+                                "user_id" => $order->getCustomerId(),
+                                "created_at" => $order->getCreatedAt()
+                            );
+
+                            $curl = curl_init("https://popup.easysize.me/api/internal/tracking/order?{data}");
                             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
                             curl_exec($curl);
                             curl_close($curl);
