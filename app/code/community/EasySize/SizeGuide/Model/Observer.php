@@ -22,14 +22,14 @@ class EasySize_SizeGuide_Model_Observer {
 
                     foreach ($item['attributes_info'] as $value) {
                         if (in_array($value['label'], $size_attributes)) {
-                            $data = http_build_query(
+                            $data = http_build_query(array(
                                 "pageview_id" => $items_in_cart->$item['simple_sku'],
                                 "purchased_size" => $value['value'],
                                 "order_id" => $order->getIncrementId(),
                                 "product_id" => $item['simple_sku'],
                                 "user_id" => $order->getCustomerId(),
                                 "created_at" => $order->getCreatedAt()
-                            );
+                            ));
 
                             $curl = curl_init("https://popup.easysize.me/api/internal/tracking/order?{data}");
                             curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
